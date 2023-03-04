@@ -22,7 +22,7 @@ client.on('ready', (bot) => {
             setPresence(bot, data);
         })
         .catch(err => console.log('Unable to fetch API'));
-      }, 1800000); // 30 Minutes
+      }, 900000); // 15 Minutes
     
     // Set status initially
     scrapeGoonTracker().then(data => { setPresence(bot, data); }).catch(err => console.log('Unable to fetch API'));
