@@ -11,6 +11,7 @@ require('dotenv').config({
 const client = new Client({ intents: []});
 const token = process.env.BOT_TOKEN;
 const api = process.env.API_URL;
+const selector = process.env.SELECTOR_PATH;
 
 // Login Bot
 client.login(token);
@@ -23,7 +24,7 @@ client.on('ready', (bot) => {
         scrapeGoonTracker().then(data => { setPresence(bot, data); }).catch(err => console.log('Unable to fetch API'));
       }, 900000); // 15 Minutes
 
-    scrapeGoonTracker().then(data => { setPresence(bot, data); }).catch(err => console.log('Unable to fetch API'));
+    scrapeGoonTracker().then(data => { setPresence(bot, data); }).catch(err => console.log('Unable to fetch API' + '\n' + err));
 });
 
 // Scrape Goon Tracker API and return current map
@@ -32,7 +33,7 @@ async function scrapeGoonTracker() {
 
     if(res.status == 200) {
         const $ = cheerio.load(res.data);
-        const locationTracked = $("div.currentLocationBox > div:nth-child(2)");
+        const locationTracked = $(selector);
 
         return locationTracked.text();
     }
